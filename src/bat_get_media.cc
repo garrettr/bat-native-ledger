@@ -28,7 +28,7 @@ BatGetMedia::BatGetMedia(bat_ledger::LedgerImpl* ledger):
 
 BatGetMedia::~BatGetMedia() {}
 
-std::string BatGetMedia::GetLinkType(const std::string& url, const std::string& first_party_url, 
+std::string BatGetMedia::GetLinkType(const std::string& url, const std::string& first_party_url,
   const std::string& referrer) {
   std::string type = "";
 
@@ -37,7 +37,7 @@ std::string BatGetMedia::GetLinkType(const std::string& url, const std::string& 
     type = YOUTUBE_MEDIA_TYPE;
   }  else if (
     (
-      (first_party_url.find("https://www.twitch.tv/") == 0 || 
+      (first_party_url.find("https://www.twitch.tv/") == 0 ||
         first_party_url.find("https://m.twitch.tv/") == 0) ||
       (referrer.find("https://player.twitch.tv/") == 0)
     ) &&
@@ -87,8 +87,8 @@ void BatGetMedia::getPublisherFromMediaProps(const std::string& mediaId, const s
                     mediaId, media_key, providerName, duration, twitchEventInfo, visit_data, _1, _2));
 }
 
-void BatGetMedia::getPublisherInfoDataCallback(const std::string& mediaId, const std::string& media_key, const std::string& providerName,
-      const uint64_t& duration, const ledger::TwitchEventInfo& twitchEventInfo, const ledger::VisitData& visit_data,
+void BatGetMedia::getPublisherInfoDataCallback(const std::string mediaId, const std::string media_key, const std::string providerName,
+      const uint64_t duration, const ledger::TwitchEventInfo twitchEventInfo, const ledger::VisitData visit_data,
       ledger::Result result, std::unique_ptr<ledger::PublisherInfo> publisher_info) {
   if (result != ledger::Result::LEDGER_OK && result != ledger::Result::NOT_FOUND) {
     // TODO error handling
@@ -266,9 +266,9 @@ uint64_t BatGetMedia::getTwitchDuration(const ledger::TwitchEventInfo& oldEventI
   return (uint64_t)time;
 }
 
-void BatGetMedia::getPublisherFromMediaPropsCallback(const uint64_t& duration, const std::string& media_key,
-    const std::string& providerName, const std::string& mediaURL, const ledger::VisitData& visit_data, 
-    bool success, const std::string& response, const std::map<std::string, std::string>& headers) {
+void BatGetMedia::getPublisherFromMediaPropsCallback(const uint64_t duration, const std::string media_key,
+    const std::string providerName, const std::string mediaURL, const ledger::VisitData visit_data,
+    bool success, const std::string response, const std::map<std::string, std::string> headers) {
   if (success && YOUTUBE_MEDIA_TYPE == providerName) {
     std::string publisherURL;
     braveledger_bat_helper::getJSONValue("author_url", response, publisherURL);
@@ -293,10 +293,10 @@ void BatGetMedia::getPublisherFromMediaPropsCallback(const uint64_t& duration, c
   }
 }
 
-void BatGetMedia::getPublisherInfoCallback(const uint64_t& duration, const std::string& media_key,
-    const std::string& providerName, const std::string& mediaURL, const std::string& publisherURL,
-    const std::string& publisherName, const ledger::VisitData& visit_data, bool success, const std::string& response,
-    const std::map<std::string, std::string>& headers) {
+void BatGetMedia::getPublisherInfoCallback(const uint64_t duration, const std::string media_key,
+    const std::string providerName, const std::string mediaURL, const std::string publisherURL,
+    const std::string publisherName, const ledger::VisitData visit_data, bool success, const std::string response,
+    const std::map<std::string, std::string> headers) {
   if (success && YOUTUBE_MEDIA_TYPE == providerName) {
     std::string favIconURL;
 //    size_t pos = response.find("<div id=\"img-preload\"");
