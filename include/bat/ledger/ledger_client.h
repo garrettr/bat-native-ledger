@@ -122,6 +122,8 @@ class LEDGER_EXPORT LedgerClient {
   // If any callbacks are made from inside RunIOTask you must use
   // RunTask to return back to the calling thread
   virtual void RunTask(std::unique_ptr<LedgerTaskRunner> task) = 0;
+  virtual void SetContributionAutoInclude(
+      std::string publisher_key, bool excluded, uint64_t windowId) = 0;
 };
 
 }  // namespace ledger
